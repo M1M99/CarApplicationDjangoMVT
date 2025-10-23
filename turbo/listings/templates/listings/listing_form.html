@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>
+    {% if mode == 'create' %} New Advertisement {% else %} Edit Advertisement {% endif %}
+</h2>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <hr/>
+
+    <h1>Extra Images</h1>
+    {{ formset.management_form }}
+
+    <div>
+        {% for f in formset.forms %}
+            <fieldset style="border:1px solid #ddd;padding:8px;margin:8px 0;">
+            {{ f.as_p }}
+            {% if f.instance.pk %}
+                <img src="{{ f.instance.image.url }}" alt="{{ f.instance.image.alt }}" width="120"/>
+            {% endif %}
+        </fieldset>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Save</button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} SIGN IN {% endblock %}
+
+{% block content %}
+    <h1>
+        SIGN IN
+    </h1>
+    {% if form.errors %}
+        <div style="color:#b00020">
+            <p>Username or Password is wrong</p>
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+        {% endif %}
+        <button type="submit">Sign IN</button>
+    </form>
+
+    <p>
+    No Account ? <a href="{% url 'signup' %}{% if next %}?next={{ next }}{% endif %}">Register</a>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Turbo Clone{% endblock %}</title>
+  <link rel="stylesheet" href="https://unpkg.com/mvp.css"></head>
+<body>
+<header>
+  <nav>
+    <a href="{% url 'listing_list' %}">Home</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'my_listings' %}">My Advertisement</a>
+      <a href="{% url 'listing_create' %}">New Advertisement</a>
+{#      <a href="{% url 'logout' %}">Log Out</a>#}
+        <form action="{% url 'logout' %}" method="post" style="display: inline">
+            {% csrf_token %}
+            <button type="submit" style="background: none;border:none;color:red;cursor:pointer">
+                Logout
+            </button>
+        </form>
+    {% else %}
+      <a href="{% url 'login' %}">Sign IN</a>
+      <a href="{% url 'signup' %}">SIGN UP</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main>
+  {% if messages %}
+    <ul>
+      {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>
+
+
+

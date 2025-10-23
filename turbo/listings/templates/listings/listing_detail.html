@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>{{ listing.title }}</h2>
+    <p>{{ listing.description|linebreaks }}</p>
+    <p>
+    <b>Price </b> {{ listing.price }}
+    <p>
+    <b>Brand/Model </b> {{ listing.brand }} - {{ listing.model }} - {{ listing.year }}
+    </p>
+
+    <p>
+    <b>City </b> {{ listing.city }}
+    </p>
+
+    {% if listing.main_image %}
+        <img style="width:250px;height:200px" src="{{ listing.main_image.url }}" alt="Adv image"/>
+    {% endif %}
+
+    {% if listing.images.all %}
+        {% for img in listing.images.all %}
+                <img src="{{ img.image.url }}" alt="{{ img.alt }}" width="200" height="150" />
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>My Advertisement</h1>
+    <form method="get">
+        <input type="text" name="q" placeholder="Search . . . " value="{{ q }}"/>
+
+        <select name="status">
+            <option value="">All</option>
+            {% for key,val in listings.model.STATUS_CHOICES %}
+                <option value="{{ key }}" {% if status == key %} selected {% endif %}>{{ val }}</option>
+            {% endfor %}
+        </select>
+        <button>Filter</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Operation</th>
+        </tr>
+
+        {% for l in listings %}
+            <tr>
+                <td>
+                    <a href="{{ l.get_absolute_url }}">{{ l.title }}</a>
+                </td>
+                <td>
+                    {{ l.price }}
+                </td>
+                <td>
+                    {{ l.status }}
+                </td>
+                <td>
+                    <a href="{% url 'listing_update' l.slug %}">Edit</a>
+                    <form action="{% url 'listing_delete' l.slug %}" method="post" style="display: inline">
+                        {% csrf_token %}
+                        <button onclick="return confirm('Are you sure to delete?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>
+                    No items exist
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}
