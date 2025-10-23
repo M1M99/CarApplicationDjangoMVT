@@ -22,8 +22,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('listings.urls')),
+    path('', include('turbo.urls')),
+    path('listings/', include('listings.urls')),
 ]
+
 
 
 if settings.DEBUG:
